@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum GameTern : sbyte
 {
@@ -53,6 +54,10 @@ public class GameInstance : MonoBehaviour
             int emptyButtonIndex = GetEmptyButtonIndex();
             // TODO
             // -1 을 반환한 경우 무승부 처리
+            if(emptyButtonIndex == -1)
+            {
+                Debug.Log("무승부");
+            }
 
             m_AIPlayer.Play(emptyButtonIndex); // 빈 공간에 O 심볼을 설정
 
@@ -77,6 +82,15 @@ public class GameInstance : MonoBehaviour
         // TODO
         // 빈 공간을 랜덤하게 선택하여 그 버튼 인덱스를 반환
         // 로직 작성
+        for(int i=0; i<m_GridButtons.Length; ++i)
+        {
+            int rand = Random.Range(0,m_GridButtons.Length);
+            if (m_GridButtons[rand].IsClear())
+            {
+                
+                return rand;
+            }
+        }
 
         return -1; // 무승부 처리
     }
